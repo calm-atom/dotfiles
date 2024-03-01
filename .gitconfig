@@ -1,0 +1,20 @@
+[user]
+	name = John Buckley
+	email = jbuckleyv@gmail.com
+[pull]
+	ff = only
+[push]
+	default = current
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[log]
+	date = iso
+[diff]
+	algorithm = histogram
+[branch]
+	sort = -committerdate
+[core]
+	editor = vi
+	excludeFiles = =
