@@ -14,24 +14,21 @@ setopt autocd extendedglob nomatch notify
 unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
-#
-# Find and set branch name var if in git repository.
-function git_branch_name()
-{
-  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-  if [[ $branch == "" ]];
-  then
-    :
-  else
-    echo '('$branch')'
-  fi
-}
 
-# Enable substitution in the prompt.
+# https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
+# Left Prompt Config
+PS1='%F{blue}%1~%f %# '
+
+# Git Prompt Status
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 
-# Prompt Config
-PS1='%F{blue}%~ %(?.%F{green}.%F{red}) $(git_branch_name)>%f '
+# Right Prompt Config
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%F{green}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
 
 # Export path to global nvim appimage
 export PATH="$PATH:/opt/nvim/" 
