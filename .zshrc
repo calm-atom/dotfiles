@@ -17,7 +17,7 @@ bindkey -v
 
 # https://scriptingosx.com/2019/07/moving-to-zsh-06-customizing-the-zsh-prompt/
 # Left Prompt Config
-PS1='%F{blue}%1~%f %# '
+PS1='%F{blue}%1~%f → '
 
 # Git Prompt Status
 autoload -Uz vcs_info
