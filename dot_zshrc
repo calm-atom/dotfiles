@@ -49,8 +49,7 @@ bindkey ' '  magic-space
 
 # MISC
 setopt interactive_comments     # allow # comments in shell; good for copy/paste
-EDITOR=nvim
-VISUAL=nvim
+EDITOR=emacs
 
 # PATH
 typeset -U path                 # keep duplicates out of the path
@@ -63,3 +62,7 @@ alias ,="cd .."
 alias h="history"
 alias hg="history -1000 | grep -i"
 
+# Variables
+
+# For emacs themes over SSH
+export COLORTERM=truecolor
