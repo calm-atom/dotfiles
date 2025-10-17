@@ -62,6 +62,18 @@ alias ,="cd .."
 alias h="history"
 alias hg="history -1000 | grep -i"
 
+# Emacs daemon
+# Check if Emacs daemon is running; if not, start it
+if ! ps -eo args | grep -qE '^emacs --daemon'; then
+  emacs --daemon >/dev/null 2>&1
+fi
+
+alias e="emacsclient -c"
+alias emacs="emacsclient -c"
+alias ek="emacsclient -e '(save-buffers-kill-emacs)'"
+
+
+
 # Variables
 
 # For emacs themes over SSH
