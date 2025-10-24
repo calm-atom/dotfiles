@@ -62,23 +62,6 @@ alias ,="cd .."
 alias h="history"
 alias hg="history -1000 | grep -i"
 
-# Emacs daemon
-# Check if Emacs daemon is running; if not, start it
-if ! ps -eo args | grep -qE '^emacs --daemon'; then
-  emacs --daemon >/dev/null 2>&1
-fi
-
-# SSH: to fix colors while running daemon set alias to these
-# alias e="TERM=xterm-direct emacsclient -c"
-# alias emacs="TERM=xterm-direct emacsclient -c"
-
-alias e="emacsclient -c"
-alias emacs="emacsclient -c"
-alias ek="emacsclient -e '(save-buffers-kill-emacs)'"
-
-
-
 # Variables
-
 # For emacs themes over SSH
 export COLORTERM=truecolor
