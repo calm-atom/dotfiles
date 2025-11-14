@@ -4,6 +4,10 @@ autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' (%b)'
 zstyle ':vcs_info:*' enable git
+
+# Cleaner multiline prompt; prompt_sp avoids broken lines
+setopt prompt_sp
+
 PROMPT='%F{blue}%n%f: %F{cyan}%(5~|.../%2~|%~)%f%F{green}${vcs_info_msg_0_}%f
 $ '
 RPROMPT='%F{242}%*%f'
@@ -34,11 +38,18 @@ setopt inc_append_history       # Write to history file immediately, not when sh
 setopt share_history            # Share history among all sessions
 
 # Use modern completion system
-autoload -Uz compinit && compinit
-setopt complete_in_word         # cd /ho/sco/tm<TAB> expands to /home/scott/tmp
-setopt auto_menu                # show completion menu on succesive tab presses
-setopt autocd                   # cd to a folder just by typing it's name
-ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&' # These "eat" the auto prior space after a tab complete
+# Faster compinit using cache when possible
+autoload -Uz compinit
+
+if [[ -f ~/.zcompdump ]]; then
+  compinit -C
+else
+  compinit
+fi
+setopt complete_in_word          # cd /ho/sco/tm<TAB> expands to /home/scott/tmp
+setopt auto_menu                 # show completion menu on succesive tab presses
+setopt autocd                    # cd to a folder just by typing it's name
+ZLE_REMOVE_SUFFIX_CHARS=$' \t\n' # Remove space after completion
 
 # BINDKEY
 bindkey -e
@@ -49,19 +60,23 @@ bindkey ' '  magic-space
 
 # MISC
 setopt interactive_comments     # allow # comments in shell; good for copy/paste
-EDITOR=emacs
+EDITOR=nvim
+VISUAL=nvim
 
 # PATH
 typeset -U path                 # keep duplicates out of the path
 
+# add any required paths here
+path=(
+  $HOME/.local/bin
+  /usr/local/bin
+  $path
+)
+
 # Aliases
-alias ls="ls ${lsflags}"
-alias ll="ls ${lsflags} -l"
-alias la="ls ${lsflags} -la"
+alias ls="command ls ${lsflags}"
+alias ll="command ls ${lsflags} -l"
+alias la="command ls ${lsflags} -la"
 alias ,="cd .."
 alias h="history"
 alias hg="history -1000 | grep -i"
-
-# Variables
-# For emacs themes over SSH
-export COLORTERM=truecolor
